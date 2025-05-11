@@ -5,10 +5,10 @@ import java.io.IOException;
 public class Labirinto {
     private char[][] labirinto;
 
-    // Construtor padrão
+    //construtor
     public Labirinto() {}
 
-    // Método para criar o labirinto a partir de um arquivo
+    //método para criar o labirinto a partir de um arquivo txt
     public void criaLabirinto(String filename) {
         try {
             BufferedReader br = new BufferedReader(new FileReader(filename));
@@ -16,7 +16,7 @@ public class Labirinto {
             int linhas = 0;
             int colunas = 0;
 
-            // Primeiro, lemos o arquivo para saber quantas linhas e colunas ele tem
+            //le o arquivo pra saber quantas linhas e colunas ele tem
             while ((linha = br.readLine()) != null) {
                 colunas = Math.max(colunas, linha.length()); // garante a maior largura
                 linhas++;
@@ -41,7 +41,7 @@ public class Labirinto {
         }
     }
 
-    // Método auxiliar para imprimir o labirinto (para debug)
+    //método auxiliar para imprimir o labirinto
     public void imprimirLabirinto() {
         for(char[] linha : labirinto) {
             for (char c: linha) {
@@ -52,32 +52,32 @@ public class Labirinto {
     }
 
     public boolean percorreLabirinto() {
-        // Começa a partir da posição inicial (ex: 0, 0). Ajuste conforme necessário.
+        //faz comecar da posicao 0, 0 (linha, coluna)
         return percorreLabirinto(0, 0);
     }
 
     private boolean percorreLabirinto (int linha, int coluna) {
-        // Verificações de limites
+        //verificações de limites das linhas e colunas
         if (linha < 0 || coluna < 0 || linha >= labirinto.length || coluna >= labirinto[0].length) {
             return false;
         }
 
         char atual = labirinto[linha][coluna];
 
-        // Se for parede ou já visitado, retorna falso
+        //se for parede ou já visitado, retorna falso
         if (atual == 'X' || atual == '*') {
             return false;
         }
 
-        // Se for a saída
+        //se for D marca como saida/fim
         if (atual == 'D') {
             return true;
         }
 
-        // Marca como visitado
+        //marca como visitado
         labirinto[linha][coluna] = '*';
 
-        // Tenta andar para todas as direções (cima, baixo, esquerda, direita)
+        //anda para todas as direções
         if (percorreLabirinto(linha - 1, coluna) || // cima
                 percorreLabirinto(linha + 1, coluna) || // baixo
                 percorreLabirinto(linha, coluna - 1) || // esquerda
